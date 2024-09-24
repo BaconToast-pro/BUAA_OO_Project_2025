@@ -1,0 +1,8 @@
+{
+    "java.project.referencedLibraries": [
+        "lib/**/*.jar",
+        "test/junit-jupiter-api-5.11.0.jar",
+        "test/junit-platform-console-standalone-1.11.0.jar",
+        "test/opentest4j-1.3.0.jar"
+    ]
+}
