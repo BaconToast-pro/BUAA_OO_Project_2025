@@ -61,4 +61,16 @@ public class BottleTest {
         Bottle bottle = new Bottle(1, "bottle", 1, 1, "HpBottle");
         assertEquals(false, bottle.getIsCarried());
     }
+
+    @Test
+    public void testPrintStatus() {
+        Bottle bottle = new Bottle(1, "bottle", 1, 1, "HpBottle");
+        bottle.printStatus();
+    }
+
+    @Test
+    public void testSetIsCarried() {
+        Bottle bottle = new Bottle(1, "bottle", 1, 1, "HpBottle");
+        bottle.setIsCarried(true);
+    }
 }

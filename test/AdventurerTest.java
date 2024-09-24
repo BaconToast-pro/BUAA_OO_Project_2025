@@ -79,4 +79,10 @@ public class AdventurerTest {
         adventure.bottle(1, "bot", 100, 20, "HpBottle");
         adventure.findBottleName(1);
     }
+
+    @Test
+    public void testPrintStatus() {
+        Adventurer adventure = new Adventurer(100, "adv");
+        adventure.printStatus();
+    }
 }
