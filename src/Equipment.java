@@ -11,6 +11,6 @@ public class Equipment extends Item {
     }
 
     public void printStatus() {
-        System.out.println("Equipment" + ' ' + super.getName() + ' ' + this.durability);
+        System.out.println(super.getName() + ' ' + this.durability);
     }
 }

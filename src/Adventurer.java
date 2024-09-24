@@ -61,6 +61,7 @@ public class Adventurer extends Unit {
         for (Equipment item : equipments) {
             if (item.getId() == id) {
                 equipments.remove(item);
+                System.out.printf("Equipment ");
                 item.printStatus();
                 break;
             }
