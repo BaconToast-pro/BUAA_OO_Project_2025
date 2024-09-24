@@ -85,7 +85,6 @@ public class Adventurer extends Unit {
     public boolean use(int id) {
         for (Bottle item : bottles) {
             if (item.getId() == id && item.getIsCarried()) {
-                item.setIsCarried(false);
                 if (!item.getIsEmpty()) {
                     switch (item.getType()) {
                         case "HpBottle":
@@ -102,7 +101,10 @@ public class Adventurer extends Unit {
                     }
                     item.setIsEmpty(true);
                 }
-                return !item.getIsCarried();
+                else {
+                    bottles.remove(item);
+                }
+                return true;
             }
         }
         return false;
