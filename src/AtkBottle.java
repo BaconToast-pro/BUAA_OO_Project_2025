@@ -1,5 +1,5 @@
 public class AtkBottle extends Bottle {
-    public AtkBottle(int id, String name, int ce, int capacity, String type) {
-        super(id, name, ce, capacity, type);
+    public AtkBottle(int id, String name, int capacity, String type, int ce) {
+        super(id, name, capacity, type, ce);
     }
 }

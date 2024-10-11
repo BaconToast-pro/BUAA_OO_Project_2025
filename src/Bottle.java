@@ -3,13 +3,13 @@ public class Bottle extends Item {
     private final String type;
     private boolean isEmpty = false;
 
-    public Bottle(int id, String name, int ce, int capacity, String type) {
+    public Bottle(int id, String name, int capacity, String type, int ce) {
         super(id, name, ce);
         this.capacity = capacity;
         this.type = type;
     }
 
-    public void setIsEmpty(boolean  isEmpty) {
+    public void setIsEmpty(boolean isEmpty) {
         this.isEmpty = isEmpty;
     }
 
