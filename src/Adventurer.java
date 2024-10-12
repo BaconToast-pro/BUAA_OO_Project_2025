@@ -69,15 +69,19 @@ public class Adventurer extends Unit {
     }
 
     public void deleteBottle(int id) {
-        Bottle item = bottles.get(id);
-        item.printStatus();
-        bottles.remove(id);
+        if (bottles.containsKey(id)) {
+            Bottle item = bottles.get(id);
+            item.printStatus();
+            bottles.remove(id);
+        }
     }
 
     public void deleteEquipment(int id) {
-        Equipment item = equipments.get(id);
-        item.printStatus();
-        equipments.remove(id);
+        if (equipments.containsKey(id)) {
+            Equipment item = equipments.get(id);
+            item.printStatus();
+            equipments.remove(id);
+        }
     }
 
     public void carry(int id) {

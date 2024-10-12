@@ -131,21 +131,35 @@ public class AdventurerTest {
     @Test
     public void testUseFragment() {
         Adventurer adventure = new Adventurer(100, "adv");
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 10; i++) {
             adventure.fragment(i, "name");
+            adventure.fragment(i, "equu");
+            adventure.fragment(i, "new");
         }
+        adventure.bottle(2, "name", 10, "HpBottle", 10);
         adventure.useFragment("name", 1);
         adventure.useFragment("name", 1);
+        adventure.useFragment("name", 1);
+        adventure.equipment(3, "equu", 20, "Axe", 0);
+        adventure.useFragment("equu", 3);
+        adventure.useFragment("new", 20);
     }
     
     @Test
     public void testFight() { 
         Adventurer adventure = new Adventurer(100, "adv");
-        Equipment equ = new Equipment(0, "name", 1, "Blade", 2);
         ArrayList<Adventurer> advs = new ArrayList<>();
         advs.add(new Adventurer(1, "1"));
         advs.add(new Adventurer(2, "2"));
-        adventure.fight(equ, advs);
+        adventure.equipment(0, "name", 1, "Blade", 2);
+        adventure.carry(0);
+        adventure.equipment(11, "name1", 1, "Axe", 2);
+        adventure.carry(11);
+        adventure.equipment(22, "name2", 1, "Sword", 2);
+        adventure.carry(22);
+        adventure.fight(adventure.nameFindEquipment("name"), advs);
+        adventure.fight(adventure.nameFindEquipment("name1"), advs);
+        adventure.fight(adventure.nameFindEquipment("name2"), advs);
     }
 
     @Test
