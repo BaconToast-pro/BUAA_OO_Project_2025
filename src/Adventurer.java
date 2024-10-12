@@ -31,15 +31,15 @@ public class Adventurer extends Unit {
         Bottle bottle;
         switch (type) {
             case "HpBottle":
-                bottle = new HpBottle(id, name, capacity, type, ce);
+                bottle = new Bottle(id, name, capacity, type, ce);
                 bottles.put(id, bottle);
                 break;
             case "AtkBottle":
-                bottle = new AtkBottle(id, name, capacity, type, ce);
+                bottle = new Bottle(id, name, capacity, type, ce);
                 bottles.put(id, bottle);
                 break;
             case "DefBottle":
-                bottle = new DefBottle(id, name, capacity, type, ce);
+                bottle = new Bottle(id, name, capacity, type, ce);
                 bottles.put(id, bottle);
                 break;
             default:

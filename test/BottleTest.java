@@ -10,8 +10,8 @@ public class BottleTest {
         int expectedCe = 1;
         int expectedCapacity = 30;
         String expectedType = "HpBottle";
-        Bottle bottle = new Bottle(expectedId, expectedName, expectedCe, 
-            expectedCapacity, expectedType);
+        Bottle bottle = new Bottle(expectedId, expectedName, 
+            expectedCapacity, expectedType, expectedCe);
         int actualId = bottle.getId();
         assertEquals(expectedId, actualId);
         String actualName = bottle.getName();
@@ -26,51 +26,51 @@ public class BottleTest {
 
     @Test
     public void testSetIsEmpty() {
-        Bottle bottle = new Bottle(1, "bottle", 1, 1, "HpBottle");
+        Bottle bottle = new Bottle(1, "bottle", 1, "HpBottle", 1);
         bottle.setIsEmpty(true);
         assertEquals(bottle.getIsEmpty(), true);
     }
 
     @Test
     public void testGetIsEmpty() {
-        Bottle bottle = new Bottle(1, "bottle", 1, 1, "HpBottle");
+        Bottle bottle = new Bottle(1, "bottle", 1, "HpBottle", 1);
         boolean actualIsEmpty = bottle.getIsEmpty();
         assertEquals(false, actualIsEmpty);
     }
 
     @Test
     public void testGetType() {
-        Bottle bottle = new Bottle(1, "bottle", 1, 1, "HpBottle");
+        Bottle bottle = new Bottle(1, "bottle", 1, "HpBottle", 1);
         assertEquals("HpBottle", bottle.getType());
     }
 
     @Test
     public void testGetCapacity() {
-        Bottle bottle = new Bottle(1, "bottle", 1, 1, "HpBottle");
+        Bottle bottle = new Bottle(1, "bottle", 1, "HpBottle", 1);
         assertEquals(1, bottle.getCapacity());
     }
 
     @Test
     public void testGetCe() {
-        Bottle bottle = new Bottle(1, "bottle", 1, 1, "HpBottle");
+        Bottle bottle = new Bottle(1, "bottle", 1, "HpBottle", 1);
         assertEquals(1, bottle.getCe());
     }
 
     @Test
     public void testGetIsCarried() {
-        Bottle bottle = new Bottle(1, "bottle", 1, 1, "HpBottle");
+        Bottle bottle = new Bottle(1, "bottle", 1, "HpBottle", 1);
         assertEquals(false, bottle.getIsCarried());
     }
 
     @Test
     public void testPrintStatus() {
-        Bottle bottle = new Bottle(1, "bottle", 1, 1, "HpBottle");
+        Bottle bottle = new Bottle(1, "bottle", 1, "HpBottle", 1);
         bottle.printStatus();
     }
 
     @Test
     public void testSetIsCarried() {
-        Bottle bottle = new Bottle(1, "bottle", 1, 1, "HpBottle");
+        Bottle bottle = new Bottle(1, "bottle", 1, "HpBottle", 1);
         bottle.setIsCarried(true);
     }
 }
