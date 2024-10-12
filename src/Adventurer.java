@@ -76,7 +76,6 @@ public class Adventurer extends Unit {
 
     public void deleteEquipment(int id) {
         Equipment item = equipments.get(id);
-        System.out.printf("Equipment ");
         item.printStatus();
         equipments.remove(id);
     }
