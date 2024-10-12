@@ -1,118 +1,44 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Scanner;
 
 public class MainClass {
     public static void main(String[] args) {
-        HashMap<Integer, Adventurer> adventurers = new HashMap<>();
+        ArrayList<ArrayList<String>> inputInfo = new ArrayList<>();
         Scanner scanner = new Scanner(System.in);
         int n = Integer.parseInt(scanner.nextLine().trim());
+        for (int i = 0; i < n; ++i) {
+            String nextLine = scanner.nextLine();
+            String[] strings = nextLine.trim().split(" +");
+            inputInfo.add(new ArrayList<>(Arrays.asList(strings)));
+        }
+        HashMap<Integer, Adventurer> adventurers = new HashMap<>();
         for (int i = 0; i < n; i++) {
-            int op = scanner.nextInt();
+            int op = Integer.parseInt(inputInfo.get(i).get(0));
+            CommandUtil cmdUtil = new CommandUtil(inputInfo.get(i));
             if (op == 1) {
-                addAdventurer(scanner, adventurers);
+                cmdUtil.addAdventurer(adventurers);
             } else if (op == 2) {
-                addBottle(scanner, adventurers);
+                cmdUtil.addBottle(adventurers);
             } else if (op == 3) {
-                addEquipment(scanner, adventurers);
+                cmdUtil.addEquipment(adventurers);
             } else if (op == 4) {
-                addDurability(scanner, adventurers);
+                cmdUtil.addDurability(adventurers);
             } else if (op == 5) {
-                deleteItem(scanner, adventurers);
+                cmdUtil.deleteItem(adventurers);
             } else if (op == 6) {
-                carryItem(scanner, adventurers);
+                cmdUtil.carryItem(adventurers);
             } else if (op == 7) {
-                useBottle(scanner, adventurers);
+                cmdUtil.useBottle(adventurers);
             } else if (op == 8) {
-                addFragment(scanner, adventurers);
+                cmdUtil.addFragment(adventurers);
             } else if (op == 9) {
-                useFragment(scanner, adventurers);
+                cmdUtil.useFragment(adventurers);
             } else {
-                fight(scanner, adventurers);
+                cmdUtil.fight(adventurers);
             }
         }
-    }
-
-    public static void addAdventurer(Scanner scanner, HashMap<Integer, Adventurer> adventurers) {
-        int advId = scanner.nextInt();
-        String name = scanner.next();
-        Adventurer adv = new Adventurer(advId, name);
-        adventurers.put(advId, adv);
-    }
-
-    public static void addBottle(Scanner scanner, HashMap<Integer, Adventurer> adventurers) {
-        int advId = scanner.nextInt();
-        int botId = scanner.nextInt();
-        String name = scanner.next();
-        int capacity = scanner.nextInt();
-        String type = scanner.next();
-        int ce = scanner.nextInt();
-        adventurers.get(advId).bottle(botId, name, capacity, type, ce);
-    }
-
-    public static void addEquipment(Scanner scanner, HashMap<Integer, Adventurer> adventurers) {
-        int advId = scanner.nextInt();
-        int equId = scanner.nextInt();
-        String name = scanner.next();
-        int durability = scanner.nextInt();
-        String type = scanner.next();
-        int ce = scanner.nextInt();
-        adventurers.get(advId).equipment(equId, name, durability, type, ce);        
-    }
-
-    public static void addDurability(Scanner scanner, HashMap<Integer, Adventurer> adventurers) {
-        int advId = scanner.nextInt();
-        int equId = scanner.nextInt();
-        adventurers.get(advId).addDurability(equId);
-    }
-
-    public static void deleteItem(Scanner scanner, HashMap<Integer, Adventurer> adventurers) {
-        int advId = scanner.nextInt();
-        int id = scanner.nextInt();
-        adventurers.get(advId).deleteItem(id);
-    }
-
-    public static void carryItem(Scanner scanner, HashMap<Integer, Adventurer> adventurers) {
-        int advId = scanner.nextInt();
-        int id = scanner.nextInt();
-        adventurers.get(advId).carry(id);
-    }
-
-    public static void useBottle(Scanner scanner, HashMap<Integer, Adventurer> adventurers) {
-        int advId = scanner.nextInt();
-        int botId = scanner.nextInt();
-        if (adventurers.get(advId).use(botId)) {
-            adventurers.get(advId).printStatus();
-        }
-        else {
-            System.out.printf("%s fail to use %s\n", 
-                adventurers.get(advId).getName(), adventurers.get(advId).findBottleName(botId));
-        }
-    }
-
-    public static void addFragment(Scanner scanner, HashMap<Integer, Adventurer> adventurers) {
-        int advId = scanner.nextInt();
-        int fragId = scanner.nextInt();
-        String name = scanner.next();
-        adventurers.get(advId).fragment(fragId, name);
-    }
-
-    public static void useFragment(Scanner scanner, HashMap<Integer, Adventurer> adventurers) {
-        int advId = scanner.nextInt();
-        String name = scanner.next();
-        int welfareId = scanner.nextInt();
-        adventurers.get(advId).useFragment(name, welfareId);
-    }
-
-    public static void fight(Scanner scanner, HashMap<Integer, Adventurer> adventurers) {
-        int advId = scanner.nextInt();
-        String name = scanner.next();
-        int k = scanner.nextInt();
-        ArrayList<Adventurer> advs = new ArrayList<>();
-        for (int i = 0; i < k; i++) {
-            int advIdI = scanner.nextInt();
-            advs.add(adventurers.get(advIdI));
-            adventurers.get(advId).fight(adventurers.get(advId).nameFindEquipment(name), advs);
-        }
+        scanner.close();
     }
 }

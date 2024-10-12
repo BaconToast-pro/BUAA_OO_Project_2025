@@ -13,7 +13,7 @@ public class Equipment extends Item {
     }
 
     public void printStatus() {
-        System.out.println(this.type + ' ' + super.getName() + ' ' + this.durability);
+        System.out.println(super.getName() + ' ' + this.durability);
     }
 
     public int getDurability() {

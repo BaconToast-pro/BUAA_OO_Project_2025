@@ -31,7 +31,7 @@ public class Bottle extends Item {
     }
 
     public void printStatus() {
-        System.out.println(this.type + ' ' + super.getName() + ' ' + this.capacity);
+        System.out.println(super.getName() + ' ' + this.capacity);
     }
 
     @Override

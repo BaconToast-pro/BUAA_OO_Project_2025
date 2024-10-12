@@ -71,6 +71,7 @@ public class Adventurer extends Unit {
     public void deleteBottle(int id) {
         if (bottles.containsKey(id)) {
             Bottle item = bottles.get(id);
+            System.out.printf("%s ", item.getType());
             item.printStatus();
             bottles.remove(id);
         }
@@ -79,6 +80,7 @@ public class Adventurer extends Unit {
     public void deleteEquipment(int id) {
         if (equipments.containsKey(id)) {
             Equipment item = equipments.get(id);
+            System.out.printf("%s ", item.getType());
             item.printStatus();
             equipments.remove(id);
         }
