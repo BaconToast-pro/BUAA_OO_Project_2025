@@ -91,7 +91,7 @@ public class CommandUtil {
         for (int i = 0; i < k; i++) {
             int advIdI = Integer.parseInt(message.get(4 + i));
             advs.add(adventurers.get(advIdI));
-            adventurers.get(advId).fight(adventurers.get(advId).nameFindEquipment(name), advs);
         }
+        adventurers.get(advId).fight(adventurers.get(advId).nameFindEquipment(name), advs);
     }
 }
