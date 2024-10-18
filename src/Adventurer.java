@@ -87,10 +87,27 @@ public class Adventurer extends Unit {
     }
 
     public void carry(int id) {
-        if (bottles.containsKey(id)) {
+        if (bottles.containsKey(id) && !bottles.get(id).getIsCarried()) {
+            int maxBottles = super.getCe() / 5 + 1;
+            int sameBottles = 0;
+            for (Bottle obj : bottles.values()) {
+                if (obj.getIsCarried() && obj.getName().equals(bottles.get(id).getName())) {
+                    sameBottles++;
+                    if (sameBottles >= maxBottles) {
+                        return;
+                    }
+                }
+            }
             bottles.get(id).carry();
         }
-        if (equipments.containsKey(id)) {
+        if (equipments.containsKey(id) && !equipments.get(id).getIsCarried()) {
+            for (Equipment obj : equipments.values()) {
+                if (obj.getIsCarried() && obj.getName().equals(equipments.get(id).getName())) {
+                    obj.setIsCarried(false);
+                    equipments.get(id).carry();
+                    return;
+                }
+            }
             equipments.get(id).carry();
         }
     }
@@ -105,9 +122,11 @@ public class Adventurer extends Unit {
                         break;
                     case "AtkBottle":
                         this.atk += item.getCe() + item.getCapacity() / 100;
+                        super.setCe(this.atk + this.def);
                         break;
                     case "DefBottle":
                         this.def += item.getCe() + item.getCapacity() / 100;
+                        super.setCe(this.atk + this.def);
                         break;
                     default:
                         break;
@@ -139,7 +158,7 @@ public class Adventurer extends Unit {
 
     public Equipment nameFindEquipment(String name) {
         for (Equipment value : equipments.values()) {
-            if (value.getName().equals(name)) {
+            if (value.getName().equals(name) && value.getIsCarried()) {
                 return value;
             }
         }
@@ -182,7 +201,7 @@ public class Adventurer extends Unit {
     }
 
     public void fight(Equipment equ, ArrayList<Adventurer> advs) {
-        if (equ.getIsCarried() && this.atk + equ.getCe() > findMaxDef(advs)) {
+        if (equ != null && equ.getIsCarried() && this.atk + equ.getCe() > findMaxDef(advs)) {
             switch (equ.getType()) {
                 case "Axe":
                     for (Adventurer obj : advs) {
