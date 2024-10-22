@@ -223,6 +223,7 @@ public class Adventurer extends Unit {
     public void normalFight(Equipment equ, ArrayList<Adventurer> advs) {
         if (equ != null && equ.getIsCarried() && this.atk + equ.getCe() > findMaxDef(advs)) {
             HashMap<Adventurer, Integer> needHelp = new HashMap<>();
+            equ.changeDurability(-1);
             for (Adventurer obj : advs) {
                 int currentHp = obj.getHp();
                 switch (equ.getType()) {
@@ -242,7 +243,6 @@ public class Adventurer extends Unit {
                     needHelp.put(obj, 1);
                 }
             }
-            equ.changeDurability(-1);
             if (equ.getDurability() == 0) {
                 equipments.remove(equ.getId());
             }
@@ -266,7 +266,9 @@ public class Adventurer extends Unit {
     }
 
     public void searchHelp() {
-        hires.forEach(hire -> renderHelp(this));
+        for (Adventurer hire : hires) {
+            hire.renderHelp(this);
+        }
         ArrayList<Adventurer> removes = new ArrayList<>();
         for (Adventurer hire : hires) {
             helpTime.merge(hire.getId(), 1, Integer::sum);
