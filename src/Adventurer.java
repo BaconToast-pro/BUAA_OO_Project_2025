@@ -283,9 +283,11 @@ public class Adventurer extends Unit {
     public void renderHelp(Adventurer adv) {
         ArrayList<Integer> removes = new ArrayList<>();
         for (Equipment equ : equipments.values()) {
-            adv.equipment(equ.getId(), equ.getName(), equ.getDurability(),
-                 equ.getType(), equ.getCe());
-            removes.add(equ.getId());
+            if (equ.getIsCarried()) {
+                adv.equipment(equ.getId(), equ.getName(), equ.getDurability(), 
+                    equ.getType(), equ.getCe());
+                removes.add(equ.getId());
+            }
         }
         for (Integer id : removes) {
             equipments.remove(id);
