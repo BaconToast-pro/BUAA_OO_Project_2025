@@ -41,9 +41,15 @@ public class CommandUtilTest {
         message.add(new ArrayList<>(Arrays.asList(
             "3", "1", "1002", "Cannon", "20", "Sword", "90")));
         message.add(new ArrayList<>(Arrays.asList(
-            "10", "1", "Cannon", "1", "2")));
+            "10", "1", "Cannon", "normal", "1", "2")));
+        message.add(new ArrayList<>(Arrays.asList(
+            "11", "1", "2")));
+        message.add(new ArrayList<>(Arrays.asList(
+            "10", "1", "Cannon", "chain", "1", "2")));
+        message.add(new ArrayList<>(Arrays.asList(
+            "12", "1")));
         ArrayList<CommandUtil> cmdUtilArray = new ArrayList<>();
-        for (int i = 0; i < 12; i++) {
+        for (int i = 0; i < 15; i++) {
             cmdUtilArray.add(new CommandUtil(message.get(i)));  
         }
         HashMap<Integer, Adventurer> advs = new HashMap<>();
@@ -59,6 +65,10 @@ public class CommandUtilTest {
         cmdUtilArray.get(9).addAdventurer(advs);
         cmdUtilArray.get(10).addEquipment(advs);
         cmdUtilArray.get(11).fight(advs);
+        cmdUtilArray.get(12).hire(advs);
+        cmdUtilArray.get(13).fight(advs);
+        advs.get(1).setAtk(2500);
+        advs.get(1).setDef(2500);
+        cmdUtilArray.get(14).challenge(advs);
     }
-
 }

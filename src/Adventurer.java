@@ -9,6 +9,8 @@ public class Adventurer extends Unit {
     private final HashMap<Integer, Bottle> bottles = new HashMap<>();
     private final HashMap<Integer, Equipment> equipments = new HashMap<>();
     private final HashSet<Fragment> fragments = new HashSet<>();
+    private final ArrayList<Adventurer> hires = new ArrayList<>();
+    private final HashMap<Integer, Integer> helpTime = new HashMap<>();
 
     public Adventurer(int id, String name) {
         super(id, name);
@@ -23,8 +25,26 @@ public class Adventurer extends Unit {
         this.hp = hp;
     }
 
+    public int getAtk() {
+        return this.atk;
+    }
+
+    public void setAtk(int atk) {
+        this.atk = atk;
+        super.setCe(this.atk + this.def);
+    }
+
     public int getDef() {
         return this.def;
+    }
+
+    public void setDef(int def) {
+        this.def = def;
+        super.setCe(this.atk + this.def);
+    }
+
+    public ArrayList<Adventurer> getHires() {
+        return this.hires;
     }
 
     public void bottle(int id, String name, int capacity, String type, int ce) {
@@ -200,27 +220,26 @@ public class Adventurer extends Unit {
         }
     }
 
-    public void fight(Equipment equ, ArrayList<Adventurer> advs) {
+    public void normalFight(Equipment equ, ArrayList<Adventurer> advs) {
         if (equ != null && equ.getIsCarried() && this.atk + equ.getCe() > findMaxDef(advs)) {
-            switch (equ.getType()) {
-                case "Axe":
-                    for (Adventurer obj : advs) {
+            for (Adventurer obj : advs) {
+                int currentHp = obj.getHp();
+                switch (equ.getType()) {
+                    case "Axe":
                         obj.setHp(obj.getHp() / 10);
-                    }
-                    break;
-                case "Sword":
-                    for (Adventurer obj : advs) {
+                        break;
+                    case "Sword":
                         obj.setHp(obj.getHp() - (equ.getCe() + this.atk - obj.getDef()));
-                    }
-                    break;
-                case "Blade":
-                    for (Adventurer obj : advs) {
+                        break;
+                    case "Blade":
                         obj.setHp(obj.getHp() - (equ.getCe() + this.atk));
-                    }
-                    break;
-                default:
-                    System.out.println("Error: function \"fight()\"\n");
-                    break;
+                        break;
+                    default:
+                        break;
+                }
+                if (obj.getHp() <= currentHp / 2) {
+                    obj.searchHelp();
+                }
             }
             equ.changeDurability(-1);
             if (equ.getDurability() == 0) {
@@ -233,6 +252,94 @@ public class Adventurer extends Unit {
         else {
             System.out.printf("Adventurer %d defeated\n", this.getId());
         }
+    }
+
+    public void hire(Adventurer adv) {
+        hires.add(adv);
+        helpTime.put(adv.getId(), 0);
+    }
+
+    public void searchHelp() {
+        hires.forEach(hire -> renderHelp(this));
+        ArrayList<Integer> removes = new ArrayList<>();
+        for (Adventurer hire : hires) {
+            helpTime.put(hire.getId(), helpTime.get(hire.getId()) + 1);
+            if (helpTime.get(hire.getId()) > 3) {
+                removes.add(hire.getId());
+                helpTime.remove(hire.getId());
+            }
+        }
+        for (Integer id : removes) {
+            hires.remove(hires.get(id));
+        }
+    }
+
+    public void renderHelp(Adventurer adv) {
+        for (Equipment equ : equipments.values()) {
+            adv.equipment(equ.getId(), equ.getName(), equ.getDurability(),
+                 equ.getType(), equ.getCe());
+            equipments.remove(equ.getId());
+        }
+    }
+
+    public void chainFind(ArrayList<Adventurer> potantials, int n) {
+        if (n != 5) {
+            if (!potantials.contains(this)) {
+                potantials.add(this);
+            }
+            for (Adventurer hire : hires) {
+                hire.chainFind(potantials, n + 1);
+            }
+        }
+    }
+
+    public void chainFight(Equipment equ, ArrayList<Adventurer> potantials) {
+        if (equ != null && equ.getIsCarried() && this.atk + equ.getCe() > findMaxDef(potantials)) {
+            int loseHp = 0;
+            for (Adventurer obj : potantials) {
+                int currentHp = obj.getHp();
+                switch (equ.getType()) {
+                    case "Axe":
+                        obj.setHp(obj.getHp() / 10);
+                        break;
+                    case "Sword":
+                        obj.setHp(obj.getHp() - (equ.getCe() + this.atk - obj.getDef()));
+                        break;
+                    case "Blade":
+                        obj.setHp(obj.getHp() - (equ.getCe() + this.atk));
+                        break;
+                    default:
+                        break;
+                }
+                loseHp += (currentHp - obj.getHp());
+            }
+            equ.changeDurability(-1);
+            if (equ.getDurability() == 0) {
+                equipments.remove(equ.getId());
+            }
+            System.out.println(loseHp);
+        }
+        else {
+            System.out.printf("Adventurer %d defeated\n", this.getId());
+        }
+    }
+
+    public int getComprehensiveCE() {
+        int comprehensiveCe = getCe();
+        for (Equipment equ : equipments.values()) {
+            if (equ.getIsCarried()) {
+                comprehensiveCe += equ.getCe();
+            }
+        }
+        for (Bottle bot : bottles.values()) {
+            if (bot.getIsCarried()) {
+                comprehensiveCe += bot.getCe();
+            }
+        }
+        for (Adventurer hire : hires) {
+            comprehensiveCe += hire.getCe();
+        }
+        return comprehensiveCe;
     }
 
     public void printStatus() {

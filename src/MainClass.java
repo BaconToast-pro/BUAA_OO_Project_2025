@@ -35,8 +35,12 @@ public class MainClass {
                 cmdUtil.addFragment(adventurers);
             } else if (op == 9) {
                 cmdUtil.useFragment(adventurers);
-            } else {
+            } else if (op == 10) {
                 cmdUtil.fight(adventurers);
+            } else if (op == 11) {
+                cmdUtil.hire(adventurers);
+            } else {
+                cmdUtil.challenge(adventurers);
             }
         }
         scanner.close();

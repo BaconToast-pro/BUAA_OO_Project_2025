@@ -157,9 +157,9 @@ public class AdventurerTest {
         adventure.carry(11);
         adventure.equipment(22, "name2", 1, "Sword", 2);
         adventure.carry(22);
-        adventure.fight(adventure.nameFindEquipment("name"), advs);
-        adventure.fight(adventure.nameFindEquipment("name1"), advs);
-        adventure.fight(adventure.nameFindEquipment("name2"), advs);
+        adventure.normalFight(adventure.nameFindEquipment("name"), advs);
+        adventure.normalFight(adventure.nameFindEquipment("name1"), advs);
+        adventure.normalFight(adventure.nameFindEquipment("name2"), advs);
     }
 
     @Test

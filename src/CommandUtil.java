@@ -86,12 +86,77 @@ public class CommandUtil {
     public void fight(HashMap<Integer, Adventurer> adventurers) {
         int advId = Integer.parseInt(message.get(1));
         String name = message.get(2);
-        int k = Integer.parseInt(message.get(3));
+        String type = message.get(3);
+        int k = Integer.parseInt(message.get(4));
         ArrayList<Adventurer> advs = new ArrayList<>();
         for (int i = 0; i < k; i++) {
-            int advIdI = Integer.parseInt(message.get(4 + i));
+            int advIdI = Integer.parseInt(message.get(5 + i));
             advs.add(adventurers.get(advIdI));
         }
-        adventurers.get(advId).fight(adventurers.get(advId).nameFindEquipment(name), advs);
+        if (type.equals("normal")) {
+            Equipment equ = adventurers.get(advId).nameFindEquipment(name);
+            adventurers.get(advId).normalFight(equ, advs);
+        }
+        else {
+            ArrayList<Adventurer> potantials = new ArrayList<>();
+            for (Adventurer adv : advs) {
+                adv.chainFind(potantials, 0);
+            }
+            Equipment equ = adventurers.get(advId).nameFindEquipment(name);
+            adventurers.get(advId).chainFight(equ, potantials);
+        }
+    }
+
+    public void hire(HashMap<Integer, Adventurer> adventures) {
+        int advId = Integer.parseInt(message.get(1));
+        int hireId = Integer.parseInt(message.get(2));
+        adventures.get(advId).hire(adventures.get(hireId));
+    }
+
+    public void challenge(HashMap<Integer, Adventurer> adventures) {
+        int advId = Integer.parseInt(message.get(1));
+        Adventurer adv = adventures.get(advId);
+        Guard shd = new Shd();
+        if (shd.fight(adv)) {
+            Treasure treasure = TreasureFactory.createTreasure(shd);
+            treasure.showInfo();
+            treasure.useBy(adv);
+        }
+        else {
+            return;
+        }
+        Guard flm = new Flm();
+        if (flm.fight(adv)) {
+            Treasure treasure = TreasureFactory.createTreasure(flm);
+            treasure.showInfo();
+            treasure.useBy(adv);
+        }
+        else {
+            return;
+        }
+        Guard stn = new Stn();
+        if (stn.fight(adv)) {
+            Treasure treasure = TreasureFactory.createTreasure(stn);
+            treasure.showInfo();
+            treasure.useBy(adv);
+        }
+        else {
+            return;
+        }
+        Guard wnd = new Wnd();
+        if (wnd.fight(adv)) {
+            Treasure treasure = TreasureFactory.createTreasure(wnd);
+            treasure.showInfo();
+            treasure.useBy(adv);
+        }
+        else {
+            return;
+        }
+        Guard frz = new Frz();
+        if (frz.fight(adv)) {
+            Treasure treasure = TreasureFactory.createTreasure(frz);
+            treasure.showInfo();
+            treasure.useBy(adv);
+        }
     }
 }
