@@ -267,16 +267,16 @@ public class Adventurer extends Unit {
 
     public void searchHelp() {
         hires.forEach(hire -> renderHelp(this));
-        ArrayList<Integer> removes = new ArrayList<>();
+        ArrayList<Adventurer> removes = new ArrayList<>();
         for (Adventurer hire : hires) {
             helpTime.put(hire.getId(), helpTime.get(hire.getId()) + 1);
             if (helpTime.get(hire.getId()) > 3) {
-                removes.add(hire.getId());
+                removes.add(hire);
                 helpTime.remove(hire.getId());
             }
         }
-        for (Integer id : removes) {
-            hires.remove(hires.get(id));
+        for (Adventurer adv : removes) {
+            hires.remove(adv);
         }
     }
 
