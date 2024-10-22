@@ -222,6 +222,7 @@ public class Adventurer extends Unit {
 
     public void normalFight(Equipment equ, ArrayList<Adventurer> advs) {
         if (equ != null && equ.getIsCarried() && this.atk + equ.getCe() > findMaxDef(advs)) {
+            HashMap<Adventurer, Integer> needHelp = new HashMap<>();
             for (Adventurer obj : advs) {
                 int currentHp = obj.getHp();
                 switch (equ.getType()) {
@@ -238,12 +239,17 @@ public class Adventurer extends Unit {
                         break;
                 }
                 if (obj.getHp() <= currentHp / 2) {
-                    obj.searchHelp();
+                    needHelp.put(obj, 1);
                 }
             }
             equ.changeDurability(-1);
             if (equ.getDurability() == 0) {
                 equipments.remove(equ.getId());
+            }
+            for (Adventurer obj : advs) {
+                if (needHelp.containsKey(obj)) {
+                    obj.searchHelp();
+                }
             }
             for (Adventurer obj : advs) {
                 System.out.println(obj.getName() + ' ' + obj.getHp());
