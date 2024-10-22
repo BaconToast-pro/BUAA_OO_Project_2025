@@ -70,5 +70,6 @@ public class CommandUtilTest {
         advs.get(1).setAtk(2500);
         advs.get(1).setDef(2500);
         cmdUtilArray.get(14).challenge(advs);
+        int a = 100;
     }
 }
